@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The LAN House - Custom PC Builder & Photography</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pure-black: #000000;
+            --dark-gray: #0d0d0d;
+            --charcoal: #1a1a1a;
+            --slate: #2d2d2d;
+            --silver: #999999;
+            --light-gray: #cccccc;
+            --white: #ffffff;
+            --accent-gold: #c9a961;
+            --accent-blue: #4a90e2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--pure-black);
+            color: var(--light-gray);
+            overflow-x: hidden;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 2rem 8%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            padding: 1.2rem 8%;
+            background: rgba(0, 0, 0, 0.98);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 3px;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 1px;
+            background: var(--accent-gold);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--silver);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            position: relative;
+            transition: all 0.3s ease;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: var(--accent-gold);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10rem 8% 4rem;
+            position: relative;
+            background: linear-gradient(180deg, var(--pure-black) 0%, var(--dark-gray) 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(74, 144, 226, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-subtitle {
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 2rem;
+            font-weight: 400;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.2s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.4s forwards;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--silver);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.6s forwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.8s forwards;
+        }
+
+        .cta-btn {
+            padding: 1.1rem 3rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            font-family: 'Montserrat', sans-serif;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .cta-primary {
+            background: var(--white);
+            color: var(--pure-black);
+        }
+
+        .cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--accent-gold);
+            transition: width 0.4s ease;
+            z-index: -1;
+        }
+
+        .cta-primary:hover::before {
+            width: 100%;
+        }
+
+        .cta-primary:hover {
+            color: var(--pure-black);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 1px solid var(--white);
+        }
+
+        .cta-secondary:hover {
+            background: var(--white);
+            color: var(--pure-black);
+        }
+
+        /* Divider */
+        .divider {
+            width: 60px;
+            height: 1px;
+            background: var(--accent-gold);
+            margin: 0 auto 3rem;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 8rem 8%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            color: var(--silver);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Portfolio Grid */
+        #portfolio {
+            background: var(--dark-gray);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            cursor: pointer;
+            background: var(--charcoal);
+        }
+
+        .portfolio-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            filter: grayscale(20%);
+        }
+
+        .portfolio-item:hover::before {
+            opacity: 1;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.08);
+            filter: grayscale(0%);
+        }
+
+        /* Consultation Section */
+        #consultation {
+            background: var(--pure-black);
+        }
+
+        .consultation-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .form-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--silver);
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+
+        input, textarea, select {
+            padding: 1.2rem 1.5rem;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            background: var(--charcoal);
+            border: 1px solid var(--slate);
+            color: var(--white);
+            transition: all 0.3s ease;
+            font-weight: 300;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            background: var(--dark-gray);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 180px;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.3rem 3rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            font-family: 'Montserrat', sans-serif;
+            background: var(--white);
+            color: var(--pure-black);
+            border: none;
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-gold);
+            transition: left 0.4s ease;
+            z-index: -1;
+        }
+
+        .submit-btn:hover::before {
+            left: 0;
+        }
+
+        .submit-btn:hover {
+            color: var(--pure-black);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-gray);
+            padding: 4rem 8%;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: 2px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .footer-links a {
+            color: var(--silver);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+            font-weight: 400;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            max-width: 1600px;
+            margin: 3rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--slate);
+            letter-spacing: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 4rem;
+            }
+
+            .section-title {
+                font-size: 3rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 5%;
+            }
+
+            .nav-links {
+                gap: 2rem;
+            }
+
+            .hero {
+                padding: 8rem 5% 4rem;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            section {
+                padding: 5rem 5%;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .cta-btn {
+                width: 100%;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--accent-gold);
+            color: var(--pure-black);
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: var(--accent-gold);
+            color: var(--pure-black);
+            padding: 1rem;
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <nav>
+            <div class="logo">THE LAN HOUSE</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#consultation">Consultation</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <p class="hero-subtitle">Custom PC Builder & Photography</p>
+            <h1>The LAN House</h1>
+            <p class="hero-description">
+                Precision-engineered custom builds and expertly crafted product photography. 
+                Where technical excellence meets artistic vision.
+            </p>
+            <div class="cta-buttons">
+                <a href="#portfolio" class="cta-btn cta-primary">View Portfolio</a>
+                <a href="#consultation" class="cta-btn cta-secondary">Book Consultation</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <div class="section-header">
+            <p class="section-label">Featured Work</p>
+            <h2 class="section-title">Portfolio</h2>
+            <div class="divider"></div>
+            <p class="section-description">
+                A curated selection of custom builds and product photography showcasing 
+                meticulous attention to detail and uncompromising quality.
+            </p>
+        </div>
+        
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <img src="images/IMG_5950.jpeg" alt="Custom PC Build - Thermaltake Case with RGB Lighting">
+            </div>
+            
+            <div class="portfolio-item">
+                <img src="images/IMG_2415.jpeg" alt="Custom Gaming PC with Purple RGB Lighting">
+            </div>
+            
+            <div class="portfolio-item">
+                <img src="images/IMG_5098.jpeg" alt="Internal PC Build with Blue RGB Cooling">
+            </div>
+            
+            <div class="portfolio-item">
+                <img src="images/IMG_4702.jpeg" alt="Purple LED PC Build in Dark Environment">
+            </div>
+            
+            <div class="portfolio-item">
+                <img src="images/IMG_4570.jpeg" alt="White PC Build with Purple and Pink RGB">
+            </div>
+            
+            <div class="portfolio-item">
+                <img src="images/IMG_4421.jpeg" alt="White Themed Custom PC Build with Cyan Accents">
+            </div>
+            
+            <div class="portfolio-item">
+                <img src="images/DSC_1770.jpeg" alt="ASRock B850 Steel Legend Motherboard Detail">
+            </div>
+            
+            <div class="portfolio-item">
+                <img src="images/DSC_1773.jpeg" alt="Motherboard I/O Panel Close-up">
+            </div>
+            
+            <div class="portfolio-item">
+                <img src="images/DSC_1772.jpeg" alt="Motherboard Rear I/O Detail Shot">
+            </div>
+            
+            <div class="portfolio-item">
+                <img src="images/DSC_1774.jpeg" alt="Close-up of Motherboard Ports and Connectors">
+            </div>
+            
+            <div class="portfolio-item">
+                <img src="images/DSC_1371.jpeg" alt="Dual White PC Builds Side by Side">
+            </div>
+        </div>
+    </section>
+
+    <section id="consultation">
+        <div class="section-header">
+            <p class="section-label">Get Started</p>
+            <h2 class="section-title">Book a Consultation</h2>
+            <div class="divider"></div>
+            <p class="section-description">
+                Share your vision and requirements. We'll collaborate to bring your 
+                ideal custom build to life.
+            </p>
+        </div>
+        
+        <div class="consultation-wrapper">
+            <form id="consultationForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="form-grid">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="service">Service Type</label>
+                        <select id="service" name="service" required>
+                            <option value="">Select a service</option>
+                            <option value="custom-build">Custom PC Build</option>
+                            <option value="photography">Product Photography</option>
+                            <option value="upgrade">System Upgrade</option>
+                            <option value="consultation">General Consultation</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="budget">Budget Range</label>
+                    <select id="budget" name="budget">
+                        <option value="">Select budget range</option>
+                        <option value="under-1500">Under $1,500</option>
+                        <option value="1500-3000">$1,500 - $3,000</option>
+                        <option value="3000-5000">$3,000 - $5,000</option>
+                        <option value="over-5000">$5,000+</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Project Details</label>
+                    <textarea id="message" name="message" placeholder="Describe your requirements, use case, and any specific preferences..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Submit Request</button>
+                
+                <div class="success-message" id="successMessage">
+                    Thank you! Your consultation request has been received. We'll contact you within 24 hours.
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">THE LAN HOUSE</div>
+            <div class="footer-links">
+                <a href="https://instagram.com" target="_blank">Instagram</a>
+                <a href="https://tiktok.com" target="_blank">TikTok</a>
+                <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+                <a href="https://facebook.com" target="_blank">Facebook</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2024 The LAN House. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Form submission with Formspree
+        const form = document.getElementById('consultationForm');
+        const successMessage = document.getElementById('successMessage');
+
+        form.addEventListener('submit', function(e) {
+            // Formspree will handle the submission
+            // Show success message after a brief delay
+            setTimeout(function() {
+                successMessage.classList.add('show');
+                form.reset();
+                
+                // Hide message after 5 seconds
+                setTimeout(function() {
+                    successMessage.classList.remove('show');
+                }, 5000);
+            }, 500);
+        });
+
+        // Smooth scroll with offset
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                const headerOffset = 100;
+                const elementPosition = target.offsetTop;
+                const offsetPosition = elementPosition - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const fadeInObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.portfolio-item, .form-grid').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            fadeInObserver.observe(el);
+        });
+    </script>
+</body>
+</html>
